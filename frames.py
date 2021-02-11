@@ -3,23 +3,6 @@ from tkinter import *
 import tkinter as tk
 
 
-# Class: Window
-# class Window:
-#     """All frames shall be ruled by this root window.o
-
-#     Attributes:
-#         master -- tk.Tk()
-#         title -- Title of the window
-#     """
-
-#     def __init__(self, master, title: str):
-#         self.master = master
-#         self.title = title
-#         self.master.title(self.title)
-
-#     def __repr(self) -> str:
-#         return f'{self.__class__.__name__}({self.master}, {self.title!r})'
-
 
 class Window_Frame:
     """Base Class for creating frames within the window.
@@ -97,25 +80,7 @@ class Search_Frame(Window_Frame):
     """Creates a search bar that lookups the URL.
 
     Attributes:
-        x_grid -- Row placement within the window
-        y_grid -- Column placemnet within the window
     """
-
-    def __init__(self, window: str, x_grid: int, y_grid: int):
-        super().__init__(window, x_grid, y_grid)
-
-        # Grid placement
-        self.window.grid(row=x_grid, column=y_grid)
-
-        # URL Search bar
-        url = StringVar()
-        self.entry_label = self.entry(url)
-        self.entry_label.grid(row=1, column=1)
-
-        self.button('Search', 1, 2)
-
-    def __repr__(self):
-        return f'{self.__class__.__name__}({self.x_grid}, {self.y_grid})'
 
     def button(self, msg: str, x_grid: int, y_grid: int):
         """Creates a button widget.
@@ -139,16 +104,7 @@ class Video_Frame(Window_Frame):
     user.
 
     Attributes:
-        x_grid -- Row placement within the window
-        y_grid -- Column placemnet within the window
-
     """
-
-    def __init__(self, window: str, x_grid: int, y_grid: int):
-        super().__init__(window, x_grid, y_grid)
-
-        # Grid placement
-        self.window.grid(row=x_grid, column=y_grid)
 
     # Method to create a frame to display a video when an event occurs
     def video(self):
