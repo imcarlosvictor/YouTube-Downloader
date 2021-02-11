@@ -4,17 +4,10 @@ import tkinter as tk
 
 
 
-class Window_Frame:
-    """Base Class for creating frames within the window.
+class Frame_Toolkit:
+    """Widget toolkit for all frames.
 
     Attributes:
-        window -- Frame name
-        x_grid -- Row placement within the window
-        y_grid -- Column placemnet within the window
-
-        entry:
-            Creates an entry widget for any user input.
-
         button:
             Creates a standard button widget.
 
@@ -22,84 +15,120 @@ class Window_Frame:
             Creates a label widget to display text.
     """
 
-    def __init__(self, window: str, x_grid: int, y_grid: int):
-        self.window = window
-        self.x_grid = x_grid
-        self.y_grid = y_grid
-
-        # Create a frame upon instantiation
-        self.frame = tk.Frame(self.window)
-        self.frame.pack(padx=10, pady=10)
-
-    def entry(self, txt_var=None):
-        """Creates an entry widget.
-
-        Attributes:
-            txt_var -- Enter text variable
-        """
-
-        self.entry_lbl = tk.Entry(self.frame, textvariable=txt_var)
-
-        return self.entry_lbl
-
-    def label(self, msg: str, x_grid: int, y_grid: int):
+    def label(self, frame, msg: str, row: int, column: int):
         """Creates a label widget.
 
         Args:
+            frame -- Residing frame of the widget
             msg -- Text to be displayed
-            x_grid -- Row placement of button
-            y_grid -- Column placement of button
+            row -- Row placement of button
+            column -- Column placement of button
 
         Returns:
             A label widget.
         """
 
-        self.lbl = tk.Label(self.frame, text=msg)
-        self.lbl.grid(row=x_grid, column=y_grid)
+        self.lbl = tk.Label(frame, text=msg)
+        self.lbl.grid(row=row, column=column)
 
         return self.lbl
 
-    def button(self, msg: str, x_grid: int, y_grid: int):
+    def button(self, frame, msg: str, row: int, column: int):
         """Creates a button widget.
 
         Args:
+            frame -- Residing frame of the widget
             msg -- Text to be displayed
-            x_grid -- Row placement of button
-            y_grid -- Column placement of button
+            row -- Row placement of button
+            column -- Column placement of button
 
         Returns:
             A button widget.
         """
 
-        self.btn = tk.Button(self.frame, text=msg)
-        self.btn.grid(row=x_grid, column=y_grid)
+        self.btn = tk.Button(frame, text=msg)
+        self.btn.grid(row=row, column=column)
+
+    def canvas(self, frame, image, width: int, height: int):
+        """Canvas for the thumbnail.
+
+        Args:
+            frame -- Residing frame of the widget
+            width -- Width of the canvas
+            height -- Height of the canvas
+        """
+
+        img = PhotoImage(file=image)
+
+        self.video_img = tk.Canvas(self.frame, width=width, height=height)
+        self.thumbnail = self.video_img.create_image(image=img)
 
 
 # Derived Class: Search Bar
-class Search_Frame(Window_Frame):
+class Search(Frame_Toolkit):
     """Creates a search bar that lookups the URL.
 
     Attributes:
     """
 
-    def button(self, msg: str, x_grid: int, y_grid: int):
+    def entry(self, frame, txt_var, row: int, column: int, col_span: int):
+        """Creates an entry widget.
+
+        Attributes:
+            frame -- residing frame the entry widget
+            txt_var -- Enter text variable
+            row -- Row placement of button
+            column -- Column placement of button
+            col_span -- Span of columns
+        """
+
+        self.entry_lbl = tk.Entry(frame, textvariable=txt_var)
+        self.entry_lbl.grid(row=row, column=column, columnspan=col_span)
+
+    def button(self, frame, msg: str, link, row: int, column: int):
         """Creates a button widget.
 
         Args:
+            frame -- residing frame the entry widget
             msg -- Text to be displayed
-            x_grid -- Row placement of button
-            y_grid -- Column placement of button
+            row -- Row placement of button
+            column -- Column placement of button
 
         Returns:
             A button widget.
         """
 
-        self.btn = tk.Button(self.frame, text=msg, command=lambda: print('Hello'))
-        self.btn.grid(row=x_grid, column=y_grid)
+        # self.btn = tk.Button(frame, text=msg, command=lambda: self.search_url(link))
+        self.btn = tk.Button(frame, text=msg, command=lambda: self.search_url(link))
+        self.btn.grid(row=row, column=column)
+
+    # def hello(self, link):
+    #     print(type(link))
+
+    def search_url(self, link: str):
+        """Searches the video via link.
+
+        Args:
+            link -- Link of the video
+        """
+
+        yt_video = YouTube(link)
+        thumbnail = yt_video.thumbnail_url
+        title = yt_video.title
+        author = yt_video.author
+
+        # Find video information
+        video_info = {
+            'Thumbnail': thumbnail,
+            'Title': title,
+            'Author': author
+        }
+
+        print(video_info)
 
 
 # Derived Class: Video Bar
-class Video_Frame(Window_Frame):
+class Video(Frame_Toolkit):
     """Creates a frame that holds all videos that has been searched by the
     user.
 
@@ -108,7 +137,7 @@ class Video_Frame(Window_Frame):
 
     # Method to create a frame to display a video when an event occurs
     def video(self):
-        """Displays the video that has been serached by the user.
+        """Displays the video that has been searched by the user.
 
         Args:
             frame -- The frame where the object will reside
