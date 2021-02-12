@@ -133,6 +133,9 @@ class Video(Frame_Toolkit):
     user.
 
     Attributes:
+        video():
+            Creates a frame block to display the thumbnail, title and author
+            of the video searched.
     """
 
     # Method to create a frame to display a video when an event occurs
@@ -151,6 +154,25 @@ class Video(Frame_Toolkit):
 # Derived Class: Downloader
 # Dropdown btn widget
 # Check btn widget
+class Downloader(Frame_Toolkit):
+    """Toolkit for the frame that downloads the specified video.
+
+    Attributes:
+        btn_radio():
+            Creates a frame that holds a radio button and the stream of the
+            YouTube video that can be downloaded.
+    """
+
+    def radio_button(self, frame, text: str, variable, value: str,
+                     row: int, column: int):
+        """Creates a radio button"""
+
+        self.radio = tk.Radiobutton(frame, text=text, variable=variable, value=value)
+        self.radio.grid(row=row, column=column)
+
+    # new radio_button function. Create a list of tuples conataining the download
+    # information and use a for loop to create a radio button instead of calling
+    # a function everytime
 
 # Save_To cmd
 # Download cmd
