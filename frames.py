@@ -1,5 +1,7 @@
 from pytube import YouTube
+from typing import List
 from tkinter import *
+from tkinter import filedialog
 import tkinter as tk
 
 
@@ -173,10 +175,32 @@ class Downloader(Frame_Toolkit):
     # new radio_button function. Create a list of tuples conataining the download
     # information and use a for loop to create a radio button instead of calling
     # a function everytime
+    def new_radio(self, stream_list: List[str]):
+        """Creates a list of radio buttons from a list.
 
-# Save_To cmd
-# Download cmd
+        Args:
+        """
+        pass
 
-# File path window (Dialog Windows)
-# Progress bar
+    # Save_To cmd
+    def save_to(self):
+        """Allows the user to choose the folder path to store the
+        downloaded video(s).
+        """
+
+        dirname = filedialog.askdirectory()
+
+        return dirname
+
+    # Download cmd
+    def download(self):
+        """Downloads the video.
+
+        Args:
+
+        """
+        # Progress bar
+
+        pass
+
 

@@ -7,7 +7,7 @@ from frames import *
 def main():
 
     root = tk.Tk()
-    root.geometry("500x200")
+    root.geometry("1300x800")
 
     # Create a Parent frame for all other subframes
     mainframe = tk.Frame(root)
